@@ -1,0 +1,26 @@
+version: "3.7"
+services:
+  mariadb:
+    image: mariadb:latest
+    container_name: banco
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: devops
+      MYSQL_DATABASE: devops
+      MYSQL_USER: devops
+    volumes:
+      - "./db/dump:/docker-entrypoint-initdb.d"
+      - "./db/data:/var/lib/mysql"
+  php:
+    image: php:7.4.8-apache
+    container_name: phplaravel       
+    ports:
+      - 8888:80
+    links:
+      - mariadb
+    volumes:
+      - "./site:/var/www/html"
+
+
+
+
