@@ -2,7 +2,7 @@ version: "3.7"
 services:
   mariadb:
     image: mariadb:latest
-    container_name: banco
+    container_name: bancovc
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: devops
@@ -13,13 +13,24 @@ services:
       - "./db/data:/var/lib/mysql"
   php:
     image: php:7.4.8-apache
-    container_name: phplaravel       
+    container_name: laravelvc
     ports:
-      - 8888:80
+      - 7777:80
     links:
       - mariadb
     volumes:
       - "./site:/var/www/html"
+  node: 
+    image: node
+    build: "./app"
+    container_name: nodevc
+    restart: always
+    volumes:
+      - "./app:/home/node/app"
+    ports:
+      - 7771:7771
+
+
 
 
 
